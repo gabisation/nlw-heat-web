@@ -12,11 +12,11 @@ type Message = {
 }
 
 export function MessageList() {
-  const messages = useState<Message[]>([])
+  const [messages, setMessages] = useState<Message[]>([])
 
   useEffect(() => {
-    api.get('messages/latest').then(response => {
-      console.log(response.data)
+    api.get<Message[]>('messages/latest').then(response => {
+      setMessages(response.data)
     })
   }, [])
 
@@ -41,35 +41,19 @@ export function MessageList() {
 
 
       <ul className={styles.messageList}>
-        <li className={styles.message}>
-          <p className={styles.messageContent}>Been waiting too long for this event! Can't wait! High expectations! 🚀</p>
-          <div className={styles.messageUser}>
-            <div className={styles.userImage}>
-              <img src="https://github.com/gabisation.png" alt="Gabrielly Fonseca picture" />
-            </div>
-            <span>Gabrielly Fonseca</span>
-          </div>
-        </li>
-
-        <li className={styles.message}>
-          <p className={styles.messageContent}>Been waiting too long for this event! Can't wait! High expectations! 🚀</p>
-          <div className={styles.messageUser}>
-            <div className={styles.userImage}>
-              <img src="https://github.com/gabisation.png" alt="Gabrielly Fonseca picture" />
-            </div>
-            <span>Gabrielly Fonseca</span>
-          </div>
-        </li>
-
-        <li className={styles.message}>
-          <p className={styles.messageContent}>Been waiting too long for this event! Can't wait! High expectations! 🚀</p>
-          <div className={styles.messageUser}>
-            <div className={styles.userImage}>
-              <img src="https://github.com/gabisation.png" alt="Gabrielly Fonseca picture" />
-            </div>
-            <span>Gabrielly Fonseca</span>
-          </div>
-        </li>
+        {messages.map(message => {
+          return (
+            <li key={message.id} className={styles.message}>
+              <p className={styles.messageContent}>{message.text}</p>
+              <div className={styles.messageUser}>
+                <div className={styles.userImage}>
+                  <img src={message.user.avatar_url} alt={message.user.name} />
+                </div>
+                <span>{message.user.name}</span>
+              </div>
+            </li>
+          )
+        })}
       </ul>
     </div>
   )
