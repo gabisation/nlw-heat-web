@@ -1,6 +1,6 @@
 # NLW Heat
 
-Stage 2 - Front-end project developed throughout NLW Heat event by Rocketseat.
+Stage 2 - Web project developed throughout NLW Heat event by Rocketseat.
 
 ## Requirements
 
